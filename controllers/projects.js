@@ -1,12 +1,19 @@
 const Project = require("../models/Project");
+const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllProjects = async (req, res) => {
-  const projects = await Project.find({ createdBy: req.user.userId }).sort(
-    "createdAt"
-  );
-  res.status(StatusCodes.OK).json({ projects, count: projects.length });
+  const user = await User.findOne({ _id: req.user.userId });
+  if (user.accountType === "admin") {
+    const projects = await Project.find({}).sort("createdBy");
+    res.status(StatusCodes.OK).json({ projects, count: projects.length });
+  } else {
+    const projects = await Project.find({ createdBy: req.user.userId }).sort(
+      "createdAt"
+    );
+    res.status(StatusCodes.OK).json({ projects, count: projects.length });
+  }
 };
 
 const getProject = async (req, res) => {
@@ -14,14 +21,25 @@ const getProject = async (req, res) => {
     user: { userId },
     params: { id: projectId },
   } = req;
-  const project = await Project.findOne({
-    _id: projectId,
-    createdBy: userId,
-  });
-  if (!project) {
-    throw new NotFoundError(`No project with id: ${projectId}`);
+  const user = await User.findOne({ _id: req.user.userId });
+  if (user.accountType === "admin") {
+    const project = await Project.findOne({
+      _id: projectId,
+    });
+    if (!project) {
+      throw new NotFoundError(`No project with id: ${projectId}`);
+    }
+    res.status(StatusCodes.OK).json({ project });
+  } else {
+    const project = await Project.findOne({
+      _id: projectId,
+      createdBy: userId,
+    });
+    if (!project) {
+      throw new NotFoundError(`No project with id: ${projectId}`);
+    }
+    res.status(StatusCodes.OK).json({ project });
   }
-  res.status(StatusCodes.OK).json({ project });
 };
 
 const createProject = async (req, res) => {
@@ -32,17 +50,16 @@ const createProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
   const {
-    body: { name, description },
-    user: { userId },
+    body: { title, description, status },
     params: { id: projectId },
   } = req;
 
-  if (name === "" || description === "") {
-    throw new BadRequestError("Please provide a name and description");
+  if (title === "" || description === "") {
+    throw new BadRequestError("Please provide a title and description");
   }
 
   const project = await Project.findByIdAndUpdate(
-    { _id: projectId, createdBy: userId },
+    { _id: projectId },
     req.body,
     { new: true, runValidators: true }
   );
@@ -56,20 +73,54 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
   const {
-    user: { userId },
     params: { id: projectId },
   } = req;
 
-  const project = await Project.findByIdAndDelete({
-    _id: projectId,
-    createdBy: userId,
-  });
+  const user = await User.findOne({ _id: req.user.userId });
+  if (user.accountType === "admin") {
+    const project = await Project.findByIdAndDelete({
+      _id: projectId,
+    });
 
-  if (!project) {
-    throw new NotFoundError(`No project with id ${projectId}`);
+    if (!project) {
+      throw new NotFoundError(`No project with id ${projectId}`);
+    }
+    res.status(StatusCodes.OK).json({ msg: "The entry was deleted." });
   }
+};
 
-  res.status(StatusCodes.OK).json({ msg: "The entry was deleted." });
+const assignProject = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  if (user.accountType === "admin") {
+    const {
+      body: { assignedToDesigner },
+      params: { id: projectId },
+    } = req;
+
+    console.log(assignedToDesigner);
+    console.log(req.params);
+
+    if (assignedToDesigner === "") {
+      throw new BadRequestError("Please select a designer");
+    }
+
+    const project = await Project.findByIdAndUpdate(
+      { _id: projectId },
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    console.log(project);
+
+    if (!project) {
+      throw new NotFoundError(`No project with id ${projectId}`);
+    }
+
+    res.status(StatusCodes.OK).json({ project });
+  } else {
+    throw new BadRequestError("User is not authorized");
+  }
 };
 
 module.exports = {
@@ -78,4 +129,5 @@ module.exports = {
   createProject,
   updateProject,
   deleteProject,
+  assignProject,
 };

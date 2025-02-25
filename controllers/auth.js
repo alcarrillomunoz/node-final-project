@@ -30,4 +30,31 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };
 
-module.exports = { register, login };
+const getUserById = async (req, res) => {
+  const {
+    params: { id: userId },
+  } = req;
+
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    throw new NotFoundError(`No user with id: ${userId}`);
+  }
+  res.status(StatusCodes.OK).json({ user });
+};
+
+const getUserByEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new NotFoundError(`No user with email: ${email}`);
+  }
+  res.status(StatusCodes.OK).json({ user });
+};
+
+const getAllUsers = async (req, res) => {
+  const users = await User.find({});
+
+  res.status(StatusCodes.OK).json({ users });
+};
+
+module.exports = { register, login, getUserById, getUserByEmail, getAllUsers };

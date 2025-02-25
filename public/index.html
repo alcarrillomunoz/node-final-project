@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects List</title>
+  </head>
+
+  <body>
+    <h1>Projects List</h1>
+    <h2 id="userName" style="display: none"></h2>
+    <hr />
+    <p id="message"></p>
+    <hr />
+    <div id="logon-register" style="display: none">
+      <button type="button" id="logon">Logon</button>
+      <button type="button" id="register">Register</button>
+    </div>
+    <div id="logon-div" style="display: none">
+      <form>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" />
+        </div>
+        <button type="button" id="logon-button">Logon</button>
+        <button type="button" id="logon-cancel">Cancel</button>
+      </form>
+    </div>
+    <div id="register-div" style="display: none">
+      <form>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" />
+        </div>
+        <div>
+          <label for="email1">Email:</label>
+          <input type="email" id="email1" />
+        </div>
+        <div>
+          <label for="password1">Password:</label>
+          <input type="password" id="password1" />
+        </div>
+        <div>
+          <label for="password2">Verify Your Password:</label>
+          <input type="password" id="password2" />
+        </div>
+        <div>
+          <select name="accountType" id="accountType">
+            <option value="client">Client</option>
+            <option value="designer">Designer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button type="button" id="register-button">Register</button>
+        <button type="button" id="register-cancel">Cancel</button>
+      </form>
+    </div>
+    <div id="projects" style="display: none">
+      <p id="projects-message"></p>
+      <table id="projects-table">
+        <tr id="projects-table-header">
+          <th>Company</th>
+          <th>Project Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Designer Assigned</th>
+          <th colspan="2"></th>
+        </tr>
+      </table>
+      <button type="button" id="add-project">New Project</button>
+      <button type="button" id="logoff">Log Off</button>
+    </div>
+    <div id="assign-project" style="display: none">
+      <div>
+        <table id="project-table">
+          <tr id="project-table-header">
+            <th>Company</th>
+            <th>Project Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th colspan="2"></th>
+          </tr>
+        </table>
+        <label for="assignedDesSelect">Assign Designer:</label>
+        <select id="assignedDesSelect"></select>
+      </div>
+      <div>
+        <button type="button" id="saveAssign">Save</button>
+        <button type="cancel" id="cancelAssign">Cancel</button>
+      </div>
+    </div>
+    <div id="edit-project" style="display: none">
+      <form>
+        <div>
+          <label for="projectTitle">Title:</label>
+          <input type="text" id="projectTitle" />
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <input type="text" id="description" />
+        </div>
+        <div>
+          <label for="status">Status:</label>
+          <select id="status">
+            <option value="New">New</option>
+            <option value="Assigned">Assigned</option>
+            <option value="In Review">In Review</option>
+            <option value="Edits Made">Edits Made</option>
+            <option value="Edits Requested">Edits Requested</option>
+            <option value="Approved">Approved</option>
+            <option value="Complete">Complete</option>
+          </select>
+        </div>
+        <button type="button" id="adding-project">Add</button>
+        <button type="button" id="edit-cancel">Cancel</button>
+      </form>
+    </div>
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>

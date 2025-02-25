@@ -23,8 +23,9 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please provide a password"],
     minlength: 6,
   },
-  isAdmin: {
-    type: Boolean,
+  accountType: {
+    type: "String",
+    enum: ["client", "designer", "admin"],
     required: [true, "Please select account type"],
   },
 });

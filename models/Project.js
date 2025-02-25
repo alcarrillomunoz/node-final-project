@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const ProjectSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
-      required: [true, "Please provide project name"],
+      required: [true, "Please provide project title"],
       maxLength: 50,
     },
     description: {
@@ -14,12 +14,13 @@ const ProjectSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: [
-        "new",
-        "submitted",
-        "edits made",
-        "pending review",
-        "edits requested",
-        "complete",
+        "New",
+        "Assigned",
+        "In Review",
+        "Edits Made",
+        "Edits Requested",
+        "Approved",
+        "Complete",
       ],
       default: "new",
     },
@@ -28,11 +29,10 @@ const ProjectSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Please provide a user"],
     },
-    // assignedTo: {
-    //   type: mongoose.Types.ObjectId,
-    //   ref: "User",
-    //   required: [true, "Please provided a user"],
-    // },
+    assignedToDesigner: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

@@ -8,9 +8,14 @@ const getAllProjects = async (req, res) => {
   if (user.accountType === "admin") {
     const projects = await Project.find({}).sort("createdBy");
     res.status(StatusCodes.OK).json({ projects, count: projects.length });
+  } else if (user.accountType === "designer") {
+    const projects = await Project.find({
+      assignedToDesigner: req.user.userId,
+    }).sort("createBy");
+    res.status(StatusCodes.OK).json({ projects, count: projects.length });
   } else {
     const projects = await Project.find({ createdBy: req.user.userId }).sort(
-      "createdAt"
+      "status"
     );
     res.status(StatusCodes.OK).json({ projects, count: projects.length });
   }
@@ -25,6 +30,15 @@ const getProject = async (req, res) => {
   if (user.accountType === "admin") {
     const project = await Project.findOne({
       _id: projectId,
+    });
+    if (!project) {
+      throw new NotFoundError(`No project with id: ${projectId}`);
+    }
+    res.status(StatusCodes.OK).json({ project });
+  } else if (user.accountType === "designer") {
+    const project = await Project.findOne({
+      _id: projectId,
+      assignedToDesigner: userId,
     });
     if (!project) {
       throw new NotFoundError(`No project with id: ${projectId}`);
@@ -85,7 +99,7 @@ const deleteProject = async (req, res) => {
     if (!project) {
       throw new NotFoundError(`No project with id ${projectId}`);
     }
-    res.status(StatusCodes.OK).json({ msg: "The entry was deleted." });
+    res.status(StatusCodes.OK).json({ project });
   }
 };
 
@@ -98,9 +112,6 @@ const assignProject = async (req, res) => {
       params: { id: projectId },
     } = req;
 
-    console.log(assignedToDesigner);
-    console.log(req.params);
-
     if (assignedToDesigner === "") {
       throw new BadRequestError("Please select a designer");
     }
@@ -110,8 +121,6 @@ const assignProject = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-
-    console.log(project);
 
     if (!project) {
       throw new NotFoundError(`No project with id ${projectId}`);

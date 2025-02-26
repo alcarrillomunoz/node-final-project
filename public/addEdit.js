@@ -46,10 +46,10 @@ export const handleAddEdit = () => {
           if (response.status === 200 || response.status === 201) {
             if (response.status === 200) {
               // a 200 is expected for a successful update
-              message.textContent = "The project entry was updated.";
+              message.textContent = `${data.project.title} project was updated.`;
             } else {
               // a 201 is expected for a successful create
-              message.textContent = "The project entry was created.";
+              message.textContent = `${data.project.title} project was created.`;
             }
 
             projectTitle.value = "";

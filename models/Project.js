@@ -15,7 +15,6 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       enum: [
         "New",
-        "Assigned",
         "In Review",
         "Edits Made",
         "Edits Requested",

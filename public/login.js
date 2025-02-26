@@ -22,7 +22,6 @@ export const handleLogin = () => {
   const userName = document.getElementById("userName");
 
   loginDiv.addEventListener("click", async (e) => {
-    e.preventDefault();
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === logonButton) {
         enableInput(false);
@@ -41,15 +40,12 @@ export const handleLogin = () => {
 
           const data = await response.json();
           if (response.status === 200) {
-            message.textContent = `Logon successful.  Welcome ${data.user.name}`;
-            userName.style.display = "block";
-            userName.innerHTML = `${data.user.name} Profile`;
+            message.textContent = `Logon successful.  Welcome ${data.user.name}!`;
+            userName.hidden = false;
+            userName.innerHTML = `${data.user.name}'s Profile`;
             setToken(data.token);
-            getCurrentUserId(email.value);
-
-            console.log("user logon data", data);
-
-            //email.value = "";
+            getCurrentUserId(data.id._id);
+            email.value = "";
             password.value = "";
 
             showProjects();
@@ -63,6 +59,7 @@ export const handleLogin = () => {
 
         enableInput(true);
       } else if (e.target === logonCancel) {
+        message.textContent = "";
         email.value = "";
         password.value = "";
         showLoginRegister();
@@ -72,6 +69,7 @@ export const handleLogin = () => {
 };
 
 export const showLogin = () => {
+  message.textContent = "";
   email.value = null;
   password.value = null;
   setDiv(loginDiv);

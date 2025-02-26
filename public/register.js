@@ -7,7 +7,7 @@ import {
   setToken,
 } from "./index.js";
 import { showLoginRegister } from "./loginRegister.js";
-import { showProjects } from "./projects.js";
+import { showProjects, getCurrentUserId } from "./projects.js";
 
 let registerDiv = null;
 let name = null;
@@ -49,16 +49,16 @@ export const handleRegister = () => {
             });
 
             const data = await response.json();
+
             if (response.status === 201) {
               message.textContent = `Registration successful.  Welcome ${data.user.name}`;
               setToken(data.token);
-
+              getCurrentUserId(data.id._id);
               name.value = "";
               email1.value = "";
               password1.value = "";
               password2.value = "";
               accountType.value = "";
-
               showProjects();
             } else {
               message.textContent = data.msg;
@@ -71,6 +71,7 @@ export const handleRegister = () => {
           enableInput(true);
         }
       } else if (e.target === registerCancel) {
+        message.textContent = "";
         name.value = "";
         email1.value = "";
         password1.value = "";
@@ -83,6 +84,7 @@ export const handleRegister = () => {
 };
 
 export const showRegister = () => {
+  message.textContent = "";
   email1.value = null;
   password1.value = null;
   password2.value = null;

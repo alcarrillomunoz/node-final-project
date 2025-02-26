@@ -4,15 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects List</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back"
+    />
+    <title>The Studio</title>
   </head>
 
   <body>
-    <h1>Projects List</h1>
-    <h2 id="userName" style="display: none"></h2>
-    <hr />
+    <div id="top">
+      <h1>The Studio</h1>
+      <h3>a project management tool</h3>
+    </div>
+    <h2 id="userName" hidden></h2>
     <p id="message"></p>
-    <hr />
     <div id="logon-register" style="display: none">
       <button type="button" id="logon">Logon</button>
       <button type="button" id="register">Register</button>
@@ -50,6 +60,7 @@
           <input type="password" id="password2" />
         </div>
         <div>
+          <label for="accountType">Please select the type of account:</label>
           <select name="accountType" id="accountType">
             <option value="client">Client</option>
             <option value="designer">Designer</option>
@@ -60,20 +71,15 @@
         <button type="button" id="register-cancel">Cancel</button>
       </form>
     </div>
-    <div id="projects" style="display: none">
-      <p id="projects-message"></p>
-      <table id="projects-table">
-        <tr id="projects-table-header">
-          <th>Company</th>
-          <th>Project Title</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Designer Assigned</th>
-          <th colspan="2"></th>
-        </tr>
-      </table>
-      <button type="button" id="add-project">New Project</button>
-      <button type="button" id="logoff">Log Off</button>
+    <div id="project-container" style="display: none">
+      <div id="projects-add-logoff-buttons">
+        <button type="button" id="add-project" hidden>New Project</button>
+        <button type="button" id="logoff">Log Off</button>
+      </div>
+      <div id="projects">
+        <div id="project-modules"></div>
+        <p id="projects-message"></p>
+      </div>
     </div>
     <div id="assign-project" style="display: none">
       <div>
@@ -86,7 +92,7 @@
             <th colspan="2"></th>
           </tr>
         </table>
-        <label for="assignedDesSelect">Assign Designer:</label>
+        <label for="assignedDesSelect">Select Designer:</label>
         <select id="assignedDesSelect"></select>
       </div>
       <div>
@@ -102,16 +108,15 @@
         </div>
         <div>
           <label for="description">Description:</label>
-          <input type="text" id="description" />
+          <textarea id="description" rows="10" cols="40"></textarea>
         </div>
         <div>
           <label for="status">Status:</label>
           <select id="status">
             <option value="New">New</option>
-            <option value="Assigned">Assigned</option>
             <option value="In Review">In Review</option>
-            <option value="Edits Made">Edits Made</option>
             <option value="Edits Requested">Edits Requested</option>
+            <option value="Edits Made">Edits Made</option>
             <option value="Approved">Approved</option>
             <option value="Complete">Complete</option>
           </select>

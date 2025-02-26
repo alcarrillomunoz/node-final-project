@@ -5,13 +5,13 @@ const {
   register,
   getUserById,
   getUserByEmail,
-  getAllUsers
+  getAllUsers,
 } = require("../controllers/auth");
 
 router.post("/register", register);
 router.post("/login", login);
 router.post("/", getUserByEmail);
 router.get("/:id", getUserById);
-router.get("/", getAllUsers); 
+router.get("/", getAllUsers);
 
 module.exports = router;

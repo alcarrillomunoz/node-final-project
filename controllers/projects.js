@@ -11,7 +11,7 @@ const getAllProjects = async (req, res) => {
   } else if (user.accountType === "designer") {
     const projects = await Project.find({
       assignedToDesigner: req.user.userId,
-    }).sort("createBy");
+    }).sort("status");
     res.status(StatusCodes.OK).json({ projects, count: projects.length });
   } else {
     const projects = await Project.find({ createdBy: req.user.userId }).sort(

@@ -55,6 +55,7 @@ export const handleAddEdit = () => {
             projectTitle.value = "";
             description.value = "";
             status.value = "pending";
+            addEditDiv.style.display = "none";
             showProjects();
           } else {
             message.textContent = data.msg;
@@ -65,6 +66,7 @@ export const handleAddEdit = () => {
         }
         enableInput(true);
       } else if (e.target === editCancel) {
+        addEditDiv.style.display = "none";
         showProjects();
       }
     }

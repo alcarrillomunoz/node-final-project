@@ -17,8 +17,10 @@ assignProjectDiv.addEventListener("click", async (e) => {
       let optionValueId = document.getElementById("assignedDesSelect").value;
 
       updateDesigner(optionValueId, projectIdValue, projectTitle);
+      assignProjectDiv.style.display = "none";
       showProjects();
     } else if (e.target === cancelButton) {
+      assignProjectDiv.style.display = "none";
       showProjects();
     }
     while (optionsList.firstChild) {
@@ -65,6 +67,7 @@ export const updateDesigner = async (
 };
 
 export const displayAssignProject = async (projectId) => {
+  loading.style.display = "block";
   message.textContent = "";
   setDiv(assignProjectDiv);
   enableInput(true);
@@ -110,8 +113,6 @@ export const displayAssignProject = async (projectId) => {
         }
       });
 
-      console.log(designersArray);
-
       let rowHTML = `
         <td>${userData.user.name}</td>
         <td>${data.project.title}</td>
@@ -129,7 +130,7 @@ export const displayAssignProject = async (projectId) => {
         designerOption.innerHTML = designersArray[x].name;
         assignedDesSelect.appendChild(designerOption);
       }
-      //setDiv(assignProjectDiv);
+      loading.style.display = "none";
     } else {
       message.textContent = "The project entry was not found";
       enableInput(false);

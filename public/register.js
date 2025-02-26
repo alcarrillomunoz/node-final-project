@@ -59,6 +59,7 @@ export const handleRegister = () => {
               password1.value = "";
               password2.value = "";
               accountType.value = "";
+              registerDiv.style.display = "none";
               showProjects();
             } else {
               message.textContent = data.msg;

@@ -15,6 +15,7 @@ let projectModulesDiv = null;
 const addButton = document.getElementById("add-project");
 const userName = document.getElementById("userName");
 const projectContainer = document.getElementById("project-container");
+const loading = document.getElementById("loading");
 
 export const handleProjects = () => {
   projectsDiv = document.getElementById("projects");
@@ -82,6 +83,7 @@ export async function getCurrentUserId(userId) {
 }
 
 export const showProjects = async () => {
+  loading.style.display = "block";
   try {
     enableInput(false);
 
@@ -117,6 +119,7 @@ export const showProjects = async () => {
 
     if (response.status === 200) {
       if (data.count === 0) {
+        loading.style.display = "none";
         projectsDiv.replaceChildren(...children);
       } else {
         for (let i = 0; i < data.projects.length; i++) {
@@ -214,6 +217,7 @@ export const showProjects = async () => {
           projectModulesDiv.appendChild(projectModule);
           children.push(projectModule);
         }
+        loading.style.display = "none";
         projectsDiv.replaceChildren(...children);
       }
     } else {

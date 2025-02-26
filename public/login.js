@@ -47,7 +47,7 @@ export const handleLogin = () => {
             getCurrentUserId(data.id._id);
             email.value = "";
             password.value = "";
-
+            loginDiv.style.display = "none";
             showProjects();
           } else {
             message.textContent = data.msg;

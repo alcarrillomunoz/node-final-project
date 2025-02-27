@@ -50,10 +50,12 @@ button:hover {
 }
 
 #message {
+  padding-left: 1.5em;
   font-size: 20px;
 }
 
 #userName {
+  padding-left: 1.25em;
   margin: 0.25em 0;
 }
 

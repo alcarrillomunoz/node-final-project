@@ -1,13 +1,14 @@
 body {
   min-width: 400px;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   font-family: "Zain", serif;
   background-image: linear-gradient(to top, white, #f2ede4);
   margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 2rem;
 }
 
 #top {
@@ -73,6 +74,7 @@ button:hover {
   margin-left: auto;
   margin-right: auto;
 }
+
 #logon-div > form > div {
   margin: 0.5em 0;
 }
@@ -97,7 +99,6 @@ button:hover {
 
 #register-div {
   display: flex;
-
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
@@ -128,8 +129,15 @@ button:hover {
   cursor: pointer;
 }
 
-#register-div > form > button {
+#register-div > form > div > button {
   margin-top: 1em;
+}
+#button-div {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 #projects-add-logoff-buttons {
@@ -246,4 +254,43 @@ select {
 #edit-project > form > button {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
+}
+
+@media screen and (max-width: 500px) {
+  #logon-div > form > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #logon-div > form > button {
+    margin-bottom: 1em;
+  }
+
+  #register-div > form > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #register-div > form > div > label,
+  input,
+  select {
+    margin: 0.5em 0;
+    float: none;
+  }
+
+  #register-div > form > div > button {
+    margin: 0.5em 0;
+  }
+
+  #button-div {
+    display: flex;
+    margin: 1em 0;
+    flex-direction: row;
+    align-items: center;
+  }
 }
